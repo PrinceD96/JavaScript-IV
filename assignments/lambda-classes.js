@@ -24,6 +24,23 @@ class Instructor extends Person {
   grade(student, subject) {
     return `${student.name} receives a perfect score on ${subject}.`;
   }
+
+  // evaluate(min, max) {
+  //   min = Math.ceil(min);
+  //   max = Math.floor(max);
+  //   return Math.floor(Math.random() * (max - min)) + min;
+  // }
+
+  evaluate(student) {
+    let points = Math.round(Math.random() * 10);
+    if (student.grade >= 90) {
+      student.grade -= points;
+      return `${points} points are subtracted from ${student.name}'s grade.  ${student.name}'s current grade is ${student.grade}`;
+    } else {
+      student.grade += points;
+      return `${points} points are added to ${student.name}'s grade.  ${student.name}'s current grade is ${student.grade}`;
+    }
+  }
 }
 
 class Student extends Person {
@@ -32,6 +49,7 @@ class Student extends Person {
     this.previousBackground = studentProps.previousBackground;
     this.className = studentProps.className;
     this.favSubjects = studentProps.favSubjects;
+    this.grade = studentProps.grade;
   }
 
   listsSubjects() {
@@ -42,6 +60,14 @@ class Student extends Person {
   }
   sprintChallenge(subject) {
     return `${this.name} has begun sprint challenge on ${subject}.`;
+  }
+  graduate() {
+    if (this.grade >= 70) {
+      return `Congratulations ${this.name}, you've graduated from Lambda School with a final grade of ${this.grade}!`;
+    } else {
+      let diff = 70 - this.grade;
+      return `Sorry, you need to study a bit more. You're just ${diff} points away from graduation.`;
+    }
   }
 }
 
@@ -83,7 +109,8 @@ const matt = new Student({
   age: 21,
   previousBackground: 'Assistant Manager',
   className: 'Webpt9',
-  favSubjects: ['Html', 'CSS', 'JavaScript', 'Python']
+  favSubjects: ['Html', 'CSS', 'JavaScript', 'Python'],
+  grade: 65
 });
 
 const becky = new Student({
@@ -92,7 +119,8 @@ const becky = new Student({
   age: 23,
   previousBackground: 'Accountant',
   className: 'Webpt11',
-  favSubjects: ['Html', 'Less', 'React']
+  favSubjects: ['Html', 'Less', 'React'],
+  grade: 80
 });
 
 const josh = new TeamLead({
@@ -141,3 +169,9 @@ console.log(eric.speak());
 console.log(eric.demo('Swift'));
 console.log(eric.standUp('#iOS9'));
 console.log(eric.debugsCode(matt, 'JavaScript'));
+
+// Testing Stretch Goals Code!
+console.log(jack.evaluate(matt));
+console.log(megan.evaluate(becky));
+console.log(matt.graduate());
+console.log(becky.graduate());
